@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>商品データ出力テスト</h1>
+    <div>
+        商品名 : <span th:text="${itemDto.itemNm}"></span>
+    </div>
+    <div>
+        商品詳細説明 : <span th:text="${itemDto.itemDetail}"></span>
+    </div>
+    <div>
+        商品登録時間 : <span th:text="${itemDto.regTime}"></span>
+    </div>
+    <div>
+        商品値段 : <span th:text="${itemDto.price}"></span>
+    </div>
+</body>
+</html>
