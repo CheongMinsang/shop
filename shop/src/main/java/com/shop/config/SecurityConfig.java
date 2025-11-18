@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,9 @@ public class SecurityConfig {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     // HTTP保安設定
     @Bean
@@ -39,10 +43,17 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                 );
 
-                http.authorizeHttpRequests(requests -> requests
-                        .anyRequest().permitAll() // 임시로 모든 요청 허용
+                http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/","/members/**",
+                                "/item/**","/images/**", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+
                 );
 
+                http.exceptionHandling(handler -> handler
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                );
 
         return http.build();
     }
