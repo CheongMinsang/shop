@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class OrderItem {
+public class OrderItem extends BaseEntity{
 
     @Id
     @GeneratedValue
@@ -17,12 +17,12 @@ public class OrderItem {
     private Long id;
 
     //一つの商品はいろんな注文商品で入れることが可能なのでManyToOneを使います。
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
     //一回の注文で何個の注文もできるので、ManyToOneを使う。
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
@@ -32,8 +32,8 @@ public class OrderItem {
     //注文数
     private int count;
 
-    private LocalDateTime regTime;
+    //private LocalDateTime regTime;
 
-    private LocalDateTime updateTime;
+    //private LocalDateTime updateTime;
 
 }
