@@ -36,4 +36,21 @@ public class OrderItem extends BaseEntity{
 
     //private LocalDateTime updateTime;
 
+    public static OrderItem createOrderItem(Item item, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice());
+        item.removeStock(count);
+        return orderItem;
+    }
+
+    public int getTotalPrice(){
+        return orderPrice*count;
+    }
+
+    //注文を取り消しした場合注文した商品数分在庫を増加させる
+    public void cancel(){
+        this.getItem().addStock(count);
+    }
 }
