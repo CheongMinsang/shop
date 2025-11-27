@@ -27,5 +27,24 @@ public class CartItem extends BaseEntity{
 
     //同じ商品を何個入れるかを数えるためのcount
     private int count;
+
+    //カートに入れる商品
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
+    }
+
+    //カートに同じ商品を追加で入れる場合
+    public void addCount(int count){
+        this.count += count;
+    }
+
+    //カートに入れた商品の数を変更するメソッド
+    public void updateCount(int count){
+        this.count = count;
+    }
 }
 
